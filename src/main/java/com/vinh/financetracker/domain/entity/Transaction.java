@@ -15,7 +15,7 @@ public class Transaction extends BaseEntity {
     private BigDecimal amount;
     private String description;
 
-    @Column(name = "update_at")
+    @Column(name = "updated_at")
     private ZonedDateTime updateAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
