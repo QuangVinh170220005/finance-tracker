@@ -14,7 +14,7 @@ public class User extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private AuthProvider provider = AuthProvider.LOCAL;
 
-    @Column(name = "update_at")
+    @Column(name = "updated_at")
     private java.time.LocalDateTime updateAt;
 
     @PreUpdate
