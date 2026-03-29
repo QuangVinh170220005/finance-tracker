@@ -1,3 +1,8 @@
-### Kiểm tra trạng thái hệ thống và version Java
-GET http://localhost:8080/health
-Accept: application/json
+POST http://localhost:8080/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "quangvinh@example.com",
+  "password": "differentPass789",
+  "fullName": "Duplicate Email User"
+}

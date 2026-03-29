@@ -18,6 +18,7 @@ CREATE TABLE categories (
                             icon VARCHAR(50),
                             color VARCHAR(20),
                             created_at TIMESTAMP WITH TIME ZONE NOT NULL,
+                            updated_at TIMESTAMP WITH TIME ZONE NOT NULL,
                             CONSTRAINT uk_user_category_name UNIQUE (user_id, name)
 );
 
@@ -42,5 +43,6 @@ CREATE TABLE budgets (
                          month INTEGER NOT NULL,
                          year INTEGER NOT NULL,
                          created_at TIMESTAMP WITH TIME ZONE NOT NULL,
+                         updated_at TIMESTAMP WITH TIME ZONE NOT NULL,
                          CONSTRAINT uk_user_category_month_year UNIQUE (user_id, category_id, month, year)
 );
