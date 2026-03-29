@@ -15,9 +15,6 @@ public class Transaction extends BaseEntity {
     private BigDecimal amount;
     private String description;
 
-    @Column(name = "updated_at")
-    private ZonedDateTime updateAt;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -29,8 +26,4 @@ public class Transaction extends BaseEntity {
     @Column(name = "transaction_date", nullable = false)
     private LocalDate transactionDate;
 
-    @PreUpdate
-    protected void onUpdate() {
-        updateAt = ZonedDateTime.now();
-    }
 }
