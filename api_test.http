@@ -1,8 +1,14 @@
-POST http://localhost:8080/api/auth/register
+### 1. Đăng nhập để lấy Token
+POST http://localhost:8080/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "quangvinh@example.com",
-  "password": "differentPass789",
-  "fullName": "Duplicate Email User"
+  "email": "bdqv@vippro.com",
+  "password": "vinhpro123"
 }
+
+> {% client.global.set("auth_token", response.body.data.accessToken); %}
+
+### 3. Test API bị bảo vệ (Health Check hoặc API khác sau này)
+GET http://localhost:8080/api/health
+Authorization: Bearer {{auth_token}}
