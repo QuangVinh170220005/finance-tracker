@@ -8,7 +8,10 @@ import lombok.*;
 @Getter @Setter @NoArgsConstructor
 public class User extends BaseEntity{
     private String email;
-    private String Password;
+    
+    @Column(nullable = true)
+    private String password;
+    
     private String fullName;
 
     @Enumerated(EnumType.STRING)

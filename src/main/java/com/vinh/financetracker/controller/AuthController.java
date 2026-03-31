@@ -43,10 +43,11 @@ public class AuthController {
         return ResponseEntity.ok(ApiResponse.success(new TokenResponse(token, "refresh-token-placeholder", "Bearer")));
     }
 
+
+    //api test auth
     @RestController
     @RequestMapping("/api")
     public class HealthCheckController {
-
         @GetMapping("/health")
         public ResponseEntity<?> checkHealth() {
             Map<String, Object> response = new HashMap<>();

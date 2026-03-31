@@ -12,3 +12,7 @@ Content-Type: application/json
 ### 3. Test API bị bảo vệ (Health Check hoặc API khác sau này)
 GET http://localhost:8080/api/health
 Authorization: Bearer {{auth_token}}
+
+### 4. Test API khác từ gg login
+GET http://localhost:8080/api/health
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJxdWFuZ3ZpbmhhYmNkZ0BnbWFpbC5jb20iLCJpYXQiOjE3NzQ5NjY3NTcsImV4cCI6MTc3NTA1MzE1N30.nloamms6G42KxNCjUk07PWKxMMcVlvZ4hH-eWMUdHbw
