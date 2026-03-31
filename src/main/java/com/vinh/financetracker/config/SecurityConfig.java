@@ -2,6 +2,7 @@ package com.vinh.financetracker.config;
 
 import com.vinh.financetracker.security.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.aop.AopAutoConfiguration;
 import org.springframework.context.annotation.*;
 import org.springframework.security.authentication.*;
@@ -26,6 +27,9 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final UserDetailsService userDetailsService;
     private final JwtService jwtService;
+    
+    @Value("${application.frontend.url}")
+    private String frontendUrl;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, CustomOAuth2UserService customOAuth2UserService, AopAutoConfiguration aopAutoConfiguration) throws Exception {
@@ -72,15 +76,15 @@ public class SecurityConfig {
     @Bean
     public AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler() {
         return (request, response, authentication) -> {
-            // Sau khi Google Login thành công, tạo JWT và trả về (ví dụ qua URL hoặc Cookie)
+            // Sau khi Google Login thành công, tạo JWT và trả về
             DefaultOAuth2User oAuth2User = (DefaultOAuth2User) authentication.getPrincipal();
             String email = oAuth2User.getAttribute("email");
 
             UserDetails userDetails = userDetailsService.loadUserByUsername(email);
             String token = jwtService.generateToken(userDetails);
 
-            // Trong thực tế API, thường redirect về một trang Frontend kèm token
-            response.sendRedirect("http://localhost:3000/oauth2/redirect?token=" + token);
+            // Redirect về Frontend với token từ biến môi trường
+            response.sendRedirect(frontendUrl + "/oauth2/redirect?token=" + token);
         };
     }
 }
