@@ -18,4 +18,6 @@ public interface BudgetRepository extends JpaRepository<Budget, UUID> {
 
     // Lấy danh sách tất cả budget của user trong 1 tháng
     List<Budget> findByUserIdAndMonthAndYear(UUID userId, int month, int year);
+
+    Optional<Budget> findByIdAndUserId(UUID id, UUID userId);
 }

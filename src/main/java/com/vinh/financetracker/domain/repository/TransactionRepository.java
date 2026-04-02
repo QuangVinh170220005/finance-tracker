@@ -8,27 +8,26 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, UUID> {
 
-    // Phân trang danh sách giao dịch của user
     Page<Transaction> findAllByUserId(UUID userId, Pageable pageable);
 
-    // Lọc giao dịch theo khoảng ngày (Dùng cho Report)
     Page<Transaction> findAllByUserIdAndTransactionDateBetween(
             UUID userId,
             LocalDate startDate,
             LocalDate endDate,
             Pageable pageable
     );
+    Optional<Transaction> findByIdAndUserId(UUID id, UUID userId);
 
-    // Tìm giao dịch theo Category của user
     Page<Transaction> findAllByUserIdAndCategoryId(UUID userId, UUID categoryId, Pageable pageable);
 
-    // Custom query để tính tổng thu/chi trong tháng (Sẽ dùng cho Report API ở Giai đoạn 8)
     @Query("SELECT SUM(t.amount) FROM Transaction t " +
             "WHERE t.user.id = :userId " +
             "AND t.category.type = :type " +
@@ -38,5 +37,19 @@ public interface TransactionRepository extends JpaRepository<Transaction, UUID> 
             @Param("type") com.vinh.financetracker.domain.entity.TransactionType type,
             @Param("startDate") LocalDate startDate,
             @Param("endDate") LocalDate endDate
+    );
+    @Query("""
+        SELECT SUM(t.amount) 
+        FROM Transaction t 
+        WHERE t.user.id = :userId 
+          AND t.category.id = :categoryId 
+          AND t.category.type = 'EXPENSE'
+          AND t.transactionDate >= :startDate 
+          AND t.transactionDate <= :endDate """)
+    BigDecimal sumAmountByCategoryAndDateRange(
+            UUID userId,
+            UUID categoryId,
+            LocalDate startDate,
+            LocalDate endDate
     );
 }

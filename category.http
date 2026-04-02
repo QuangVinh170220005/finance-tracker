@@ -1,0 +1,31 @@
+### 1. Tạo danh mục Ăn uống (Expense)
+POST http://localhost:8080/api/categories
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "name": "Nấu ăn",
+  "type": "EXPENSE",
+  "icon": "food",
+  "color": "#FF0000"
+}
+
+### 2. Tạo danh mục Lương (Income)
+POST http://localhost:8080/api/categories
+Authorization: Bearer {{auth_token}}
+Content-Type: application/json
+
+{
+  "name": "Lương tháng",
+  "type": "INCOME",
+  "icon": "money",
+  "color": "#00FF00"
+}
+
+### 3. Lấy danh sách danh mục
+GET http://localhost:8080/api/categories
+Authorization: Bearer {{auth_token}}
+
+### 4. Xóa danh mục (Thay ID vào)
+DELETE http://localhost:8080/api/categories/276d9134-9bc3-49ab-963e-17adc5d925c5
+Authorization: Bearer {{auth_token}}
