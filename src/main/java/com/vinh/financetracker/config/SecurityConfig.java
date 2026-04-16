@@ -40,8 +40,9 @@ public class SecurityConfig {
                                 "/api/auth/**",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
-                                "/api-docs/**",
+                                "/v3/api-docs/**",    // Sửa từ /api-docs/** thành /v3/api-docs/**
                                 "/login/**",
+                                "/api/health",
                                 "/api").permitAll()
                         .anyRequest().authenticated()
                 )
