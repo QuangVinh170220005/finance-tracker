@@ -1,3 +1,9 @@
+# 1. PHẦN BỔ SUNG ĐỂ CHẠY TRÊN RAILWAY (FIX LỖI SWAGGER/HTTPS)
+server:
+  port: 8080
+  forward-headers-strategy: framework # Giúp Spring Boot hiểu là đang chạy HTTPS qua Proxy của Railway
+
+# 2. PHẦN CẤU HÌNH DATABASE CỦA BẠN
 spring:
   datasource:
     url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
@@ -13,6 +19,7 @@ spring:
   flyway:
     enabled: true
 
+# 3. PHẦN CẤU HÌNH LOGGING
 logging:
   level:
     root: WARN
@@ -20,10 +27,11 @@ logging:
     org.springframework: WARN
     org.hibernate: WARN
 
-# Cấu hình Swagger để ép buộc dùng đúng đường dẫn trên server
+# 4. CẤU HÌNH SWAGGER (FIX LỖI PETSTORE)
 springdoc:
   api-docs:
     path: /v3/api-docs
   swagger-ui:
     path: /swagger-ui.html
     config-url: /v3/api-docs/swagger-config
+    display-request-duration: true
