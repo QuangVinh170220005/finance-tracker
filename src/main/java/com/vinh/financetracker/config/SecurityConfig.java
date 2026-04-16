@@ -41,8 +41,8 @@ public class SecurityConfig {
                                 "/swagger-ui/**",
                                 "/api-docs/**",
                                 "/login/**",
-                                "/api").permitAll() // Công khai login/register
-                        .anyRequest().authenticated() // Tất cả các API khác phải login
+                                "/api").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
@@ -76,14 +76,11 @@ public class SecurityConfig {
     @Bean
     public AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler() {
         return (request, response, authentication) -> {
-            // Sau khi Google Login thành công, tạo JWT và trả về
             DefaultOAuth2User oAuth2User = (DefaultOAuth2User) authentication.getPrincipal();
             String email = oAuth2User.getAttribute("email");
 
             UserDetails userDetails = userDetailsService.loadUserByUsername(email);
             String token = jwtService.generateToken(userDetails);
-
-            // Redirect về Frontend với token từ biến môi trường
             response.sendRedirect(frontendUrl + "/oauth2/redirect?token=" + token);
         };
     }

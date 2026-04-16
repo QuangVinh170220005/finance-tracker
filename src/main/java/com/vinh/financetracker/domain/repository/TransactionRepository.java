@@ -1,6 +1,7 @@
 package com.vinh.financetracker.domain.repository;
 
 import com.vinh.financetracker.domain.entity.Transaction;
+import com.vinh.financetracker.dto.request.CategoryReport;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -52,4 +54,18 @@ public interface TransactionRepository extends JpaRepository<Transaction, UUID> 
             LocalDate startDate,
             LocalDate endDate
     );
+    @Query("""
+        SELECT new com.vinh.financetracker.dto.request.CategoryReport(
+            t.category.name, 
+            SUM(t.amount), 
+            0.0)
+        FROM Transaction t 
+        WHERE t.user.id = :userId 
+          AND t.category.type = 'EXPENSE'
+          AND t.transactionDate >= :startDate 
+          AND t.transactionDate <= :endDate
+        GROUP BY t.category.name
+        ORDER BY SUM(t.amount) DESC
+    """)
+    List<CategoryReport> getExpenseReportByCategory(UUID userId, LocalDate startDate, LocalDate endDate);
 }
